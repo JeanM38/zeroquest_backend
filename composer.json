@@ -1,0 +1,19 @@
+{
+    "name": "jmionnet/zeroquest-backend",
+    "description": "ZeroQuest API",
+    "type": "project",
+    "require": {
+        "vlucas/phpdotenv": "^5.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Jmionnet\\ZeroquestBackend\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jean MIONNET",
+            "email": "jmionnet@emagineurs.com"
+        }
+    ]
+}
