@@ -1,19 +1,22 @@
 <?php
 
-class Upvote {
+class Review {
     public ?int $id;
     public int $user_id;
     public int $creation_id;
+    public bool $upvote;
 
     public function __construct(
         ?int $id = null,
         int $user_id,
-        int $creation_id
+        int $creation_id,
+        bool $upvote
     )
     {
         $this->id = $id;
         $this->user_id = $user_id;
         $this->creation_id = $creation_id;
+        $this->upvote = $upvote;
     }
 
     /**
@@ -72,6 +75,26 @@ class Upvote {
     public function setCreation_id($creation_id)
     {
         $this->creation_id = $creation_id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of upvote
+     */ 
+    public function getUpvote()
+    {
+        return $this->upvote;
+    }
+
+    /**
+     * Set the value of upvote
+     *
+     * @return  self
+     */ 
+    public function setUpvote($upvote)
+    {
+        $this->upvote = $upvote;
 
         return $this;
     }

@@ -3,17 +3,17 @@
 class FaqItem {
     public ?int $id;
     public string $question;
-    public string $response;
+    public string $answer;
 
     public function __construct(
         ?int $id = null,
         string $question,
-        string $response
+        string $answer
     )
     {
         $this->id = $id;
         $this->question = $question;
-        $this->response = $response;
+        $this->response = $answer;
     }
     
 
@@ -58,21 +58,21 @@ class FaqItem {
     }
 
     /**
-     * Get the value of response
+     * Get the value of answer
      */ 
-    public function getResponse()
+    public function getAnswer()
     {
-        return $this->response;
+        return $this->answer;
     }
 
     /**
-     * Set the value of response
+     * Set the value of answer
      *
      * @return  self
      */ 
-    public function setResponse($response)
+    public function setAnswer($answer)
     {
-        $this->response = $response;
+        $this->answer = $answer;
 
         return $this;
     }
