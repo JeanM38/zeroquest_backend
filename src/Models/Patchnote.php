@@ -2,20 +2,23 @@
 
 class PatchNote {
     public ?int $id;
-    public int $version;
+    public float $version;
     public int $publication_date;
+    public int $updated_at;
     public string $bodytext;
 
     public function __construct(
         ?int $id = null,
-        int $version,
+        float $version,
         int $publication_date,
-        int $bodytext
+        int $updated_at,
+        string $bodytext
     )
     {
         $this->id = $id;
         $this->version = $version;
         $this->publication_date = $publication_date;
+        $this->updated_at = $updated_at;
         $this->bodytext = $bodytext;
     }
 
@@ -95,6 +98,26 @@ class PatchNote {
     public function setBodytext($bodytext)
     {
         $this->bodytext = $bodytext;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of updated_at
+     */ 
+    public function getUpdated_at()
+    {
+        return $this->updated_at;
+    }
+
+    /**
+     * Set the value of updated_at
+     *
+     * @return  self
+     */ 
+    public function setUpdated_at($updated_at)
+    {
+        $this->updated_at = $updated_at;
 
         return $this;
     }
