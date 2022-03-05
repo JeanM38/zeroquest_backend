@@ -3,12 +3,22 @@
 require_once "./bootstrap.php";
 
 /* Controllers */
-require_once("./src/Controller/UserController.php");
+require_once("./src/Controller/Controller.php");     
+require_once("./src/Controller/UserController.php"); 
 require_once("./src/Controller/PatchNoteController.php");
 require_once("./src/Controller/FaqItemController.php");
 require_once("./src/Controller/ReviewController.php");
 require_once("./src/Controller/CreationController.php");
 require_once("./src/Controller/CharacterController.php");
+
+/* Managers */
+require_once('./src/Manager/Manager.php');     
+require_once('./src/Manager/UserManager.php'); 
+require_once('./src/Manager/ReviewManager.php');
+require_once('./src/Manager/PatchNoteManager.php');
+require_once('./src/Manager/FaqItemManager.php');
+require_once('./src/Manager/CreationManager.php');
+require_once('./src/Manager/CharacterManager.php');
 
 /* Access configuration */
 header("Access-Control-Allow-Origin: *");
@@ -35,22 +45,52 @@ if (isset($uri[2])) {
 switch ($uri[1]) {
     case 'user':
         // pass the request method and user ID to the PersonController
-        $controller = new UserController($dbConnection, $_SERVER["REQUEST_METHOD"], $id);
+        $controller = new UserController(
+            $dbConnection, 
+            $_SERVER["REQUEST_METHOD"], 
+            $id, 
+            new UserManager($dbConnection)
+        );
         break;
     case 'patchnote':
-        $controller = new PatchNoteController($dbConnection, $_SERVER["REQUEST_METHOD"], $id);
+        $controller = new PatchNoteController(
+            $dbConnection, 
+            $_SERVER["REQUEST_METHOD"], 
+            $id,
+            new PatchNoteManager($dbConnection)
+        );
         break;
     case 'faqitem':
-        // $controller = new FaqItemController($dbConnection, $_SERVER["REQUEST_METHOD"], $id);
+        $controller = new FaqItemController(
+            $dbConnection, 
+            $_SERVER["REQUEST_METHOD"], 
+            $id,
+            new FaqItemManager($dbConnection)
+        );
         break;
     case 'review':
-        // $controller = new ReviewController($dbConnection, $_SERVER["REQUEST_METHOD"], $id);
+        $controller = new ReviewController(
+            $dbConnection, 
+            $_SERVER["REQUEST_METHOD"], 
+            $id,
+            new ReviewManager($dbConnection)
+        );
         break;
     case 'creation':
-        // $controller = new CreationController($dbConnection, $_SERVER["REQUEST_METHOD"], $id);
+        $controller = new CreationController(
+            $dbConnection, 
+            $_SERVER["REQUEST_METHOD"], 
+            $id,
+            new CreationManager($dbConnection)
+        );
         break;
     case 'character':
-        // $controller = new CharacterController($dbConnection, $_SERVER["REQUEST_METHOD"], $id);
+        $controller = new CharacterController(
+            $dbConnection, 
+            $_SERVER["REQUEST_METHOD"], 
+            $id,
+            new CharacterManager($dbConnection)
+        );
         break;
     default:
         header("HTTP/1.1 404 Not Found");
@@ -58,5 +98,5 @@ switch ($uri[1]) {
         break;
 }
 
-/* Process HTTP request */
+/* Process HTTP request of the selected controller */
 $controller->processRequest();

@@ -1,13 +1,8 @@
 <?php
 
-class ReviewManager {
+require_once('./src/Manager/Manager.php');
 
-    private $db = null;
-
-    public function __construct($db)
-    {
-        $this->db = $db;
-    }
+class ReviewManager extends Manager {
 
     /**
      * Get every review entries

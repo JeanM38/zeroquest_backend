@@ -1,13 +1,8 @@
 <?php
 
-class Character {
+require_once('./src/Manager/Manager.php');
 
-    private $db = null;
-
-    public function __construct($db)
-    {
-        $this->db = $db;
-    }
+class CharacterManager extends Manager {
 
     /**
      * Get every character entries

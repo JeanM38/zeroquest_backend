@@ -1,13 +1,8 @@
 <?php
 
-class CreationManager {
+require_once('./src/Manager/Manager.php');
 
-    private $db = null;
-
-    public function __construct($db)
-    {
-        $this->db = $db;
-    }
+class CreationManager extends Manager {
 
     /**
      * Get every user entries

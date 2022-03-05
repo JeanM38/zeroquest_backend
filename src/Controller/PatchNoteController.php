@@ -1,27 +1,8 @@
 <?php
 
-require_once('./src/Manager/PatchNoteManager.php');
 require_once('./src/Models/PatchNote.php');
 
-class PatchNoteController {
-
-    private $db;
-
-    /* Request data */
-    private $requestMethod;
-    private $patchNoteId;
-
-    /* Hold every patchNote's db requests */
-    private $patchNoteManager;
-
-    public function __construct($db, $requestMethod, $patchNoteId)
-    {
-        $this->db = $db;
-        $this->requestMethod = $requestMethod;
-        $this->patchNoteId = $patchNoteId;
-
-        $this->patchNoteManager = new PatchNoteManager($db);
-    }
+class PatchNoteController extends Controller {
 
     public function processRequest()
     {
@@ -29,7 +10,7 @@ class PatchNoteController {
         switch ($this->requestMethod) {
             case 'GET':
                 /* User want a specific patchNote or every patchNotes */
-                $response = $this->patchNoteId ? $this->getPatchNote($this->patchNoteId) : $this->getAllPatchNotes();
+                $response = $this->id ? $this->getPatchNote($this->id) : $this->getAllPatchNotes();
                 break;
             case 'POST':
                 /* Create a new patch_note */
@@ -37,11 +18,11 @@ class PatchNoteController {
                 break;
             case 'PUT':
                 /* Update an existing patch_note */
-                $response = $this->updatePatchNoteFromRequest($this->patchNoteId);
+                $response = $this->updatePatchNoteFromRequest($this->id);
                 break;
             case 'DELETE':
                 /* Delete an existing patch_note */
-                $response = $this->deletePatchNote($this->patchNoteId);
+                $response = $this->deletePatchNote($this->id);
                 break;
             default:
                 /* Return a 404 page on unavailable HTTP method */
@@ -59,7 +40,7 @@ class PatchNoteController {
     private function getAllPatchNotes()
     {
         /* Get all patch_notes */
-        $result = $this->patchNoteManager->findAll();
+        $result = $this->manager->findAll();
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = json_encode($result);
 
@@ -69,7 +50,7 @@ class PatchNoteController {
     private function getPatchNote($id)
     {
         /* Get specific patch_note */
-        $result = $this->patchNoteManager->findById($id);
+        $result = $this->manager->findById($id);
 
         /* 404 on unfound patch_note */
         if (count($result) === 0) {
@@ -105,7 +86,7 @@ class PatchNoteController {
             return $this->unprocessableEntityResponse();
         } else {
             /* Call insert query */
-            $this->patchNoteManager->insert($patchNote);
+            $this->manager->insert($patchNote);
             $response['status_code_header'] = 'HTTP/1.1 201 Created';
             $response['body'] = null;
             return $response;
@@ -118,7 +99,7 @@ class PatchNoteController {
         $currentDate = $currentDate->getTimestamp();
 
         /* Get specific patch_note */
-        $patchNoteJSON = $this->patchNoteManager->findById($id);
+        $patchNoteJSON = $this->manager->findById($id);
 
         /* 404 on unfound patch_note */
         if (!$patchNoteJSON) {
@@ -143,7 +124,7 @@ class PatchNoteController {
         // }
 
         /* Update existing patch_note */
-        $this->patchNoteManager->update($id, $patchNote);
+        $this->manager->update($id, $patchNote);
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = null;
 
@@ -153,7 +134,7 @@ class PatchNoteController {
     private function deletePatchNote($id)
     {
         /* Get specific patch_note */
-        $result = $this->patchNoteManager->findById($id);
+        $result = $this->manager->findById($id);
 
         /* 404 on unfound patch_note */
         if (!$result) {
@@ -161,7 +142,7 @@ class PatchNoteController {
         }
 
         /* Delete specific patch_note */
-        $this->patchNoteManager->delete($id);
+        $this->manager->delete($id);
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = null;
 
@@ -181,23 +162,4 @@ class PatchNoteController {
 
     //     return true;
     // }
-
-    private function unprocessableEntityResponse()
-    {
-        $response['status_code_header'] = 'HTTP/1.1 422 Unprocessable Entity';
-
-        $response['body'] = json_encode([
-            'error' => 'Invalid input'
-        ]);
-
-        return $response;
-    }
-
-    private function notFoundResponse()
-    {
-        $response['status_code_header'] = 'HTTP/1.1 404 Not Found';
-        $response['body'] = [];
-
-        return $response;
-    }
 } 

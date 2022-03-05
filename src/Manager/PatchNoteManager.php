@@ -1,13 +1,8 @@
 <?php
 
-class PatchNoteManager {
+require_once('./src/Manager/Manager.php');
 
-    private $db = null;
-
-    public function __construct($db)
-    {
-        $this->db = $db;
-    }
+class PatchNoteManager extends Manager {
 
     /**
      * Get every patch_note entries

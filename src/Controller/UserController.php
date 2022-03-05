@@ -1,27 +1,7 @@
 <?php
 
-require_once('./src/Manager/UserManager.php');
 require_once('./src/Models/User.php');
-
-class UserController {
-
-    private $db;
-
-    /* Request data */
-    private $requestMethod;
-    private $userId;
-
-    /* Hold every user's db requests */
-    private $userManager;
-
-    public function __construct($db, $requestMethod, $userId)
-    {
-        $this->db = $db;
-        $this->requestMethod = $requestMethod;
-        $this->userId = $userId;
-
-        $this->userManager = new UserManager($db);
-    }
+class UserController extends Controller {
 
     public function processRequest()
     {
@@ -29,7 +9,7 @@ class UserController {
         switch ($this->requestMethod) {
             case 'GET':
                 /* User want a specific user or every users */
-                $response = $this->userId ? $this->getUser($this->userId) : $this->getAllUsers();
+                $response = $this->id ? $this->getUser($this->id) : $this->getAllUsers();
                 break;
             case 'POST':
                 /* Create a new user */
@@ -37,11 +17,11 @@ class UserController {
                 break;
             case 'PUT':
                 /* Update an existing user */
-                $response = $this->updateUserFromRequest($this->userId);
+                $response = $this->updateUserFromRequest($this->id);
                 break;
             case 'DELETE':
                 /* Delete an existing user */
-                $response = $this->deleteUser($this->userId);
+                $response = $this->deleteUser($this->id);
                 break;
             default:
                 /* Return a 404 page on unavailable HTTP method */
@@ -59,7 +39,7 @@ class UserController {
     private function getAllUsers()
     {
         /* Get all users */
-        $result = $this->userManager->findAll();
+        $result = $this->manager->findAll();
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = json_encode($result);
 
@@ -69,7 +49,7 @@ class UserController {
     private function getUser($id)
     {
         /* Get specific user */
-        $result = $this->userManager->findBy($id, 'id');
+        $result = $this->manager->findBy($id, 'id');
 
         /* 404 on unfound user */
         if (count($result) === 0) {
@@ -84,12 +64,12 @@ class UserController {
 
     private function createUserFromRequest()
     {
-        $userJSON = json_decode(file_get_contents("php://input"), true);
+        $data = json_decode(file_get_contents("php://input"), true);
         $user = new User(
             null,
-            $userJSON['pseudo'],
-            $userJSON['email'],
-            $userJSON['password']
+            $data['pseudo'],
+            $data['email'],
+            $data['password']
         );
 
         /* Check validity of data */
@@ -113,7 +93,7 @@ class UserController {
     private function updateUserFromRequest($id)
     {
         /* Get specific user */
-        $userJSON = $this->userManager->findBy($id, 'id');
+        $userJSON = $this->manager->findBy($id, 'id');
 
         /* 404 on unfound user */
         if (!$userJSON) {
@@ -140,7 +120,7 @@ class UserController {
         }
 
         /* Update existing user */
-        $this->userManager->update($id, $user);
+        $this->manager->update($id, $user);
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = null;
 
@@ -150,15 +130,15 @@ class UserController {
     private function deleteUser($id)
     {
         /* Get specific user */
-        $result = $this->userManager->findBy($id, 'id');
+        $user = $this->manager->findBy($id, 'id');
 
         /* 404 on unfound user */
-        if (!$result) {
+        if (!$user) {
             return $this->notFoundResponse();
         }
 
         /* Delete specific user */
-        $this->userManager->delete($id);
+        $this->manager->delete($id);
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = null;
 
@@ -177,24 +157,5 @@ class UserController {
         }
 
         return true;
-    }
-
-    private function unprocessableEntityResponse()
-    {
-        $response['status_code_header'] = 'HTTP/1.1 422 Unprocessable Entity';
-
-        $response['body'] = json_encode([
-            'error' => 'Invalid input'
-        ]);
-
-        return $response;
-    }
-
-    private function notFoundResponse()
-    {
-        $response['status_code_header'] = 'HTTP/1.1 404 Not Found';
-        $response['body'] = [];
-
-        return $response;
     }
 } 
