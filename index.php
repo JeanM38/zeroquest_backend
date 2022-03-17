@@ -3,7 +3,7 @@
 require_once "./bootstrap.php";
 
 /* Controllers */
-require_once("./src/Controller/Controller.php");     
+require_once("./src/Controller/BaseController.php"); # Base  
 require_once("./src/Controller/UserController.php"); 
 require_once("./src/Controller/PatchNoteController.php");
 require_once("./src/Controller/FaqItemController.php");
@@ -12,7 +12,7 @@ require_once("./src/Controller/CreationController.php");
 require_once("./src/Controller/CharacterController.php");
 
 /* Managers */
-require_once('./src/Manager/Manager.php');     
+require_once('./src/Manager/BaseManager.php'); # Base
 require_once('./src/Manager/UserManager.php'); 
 require_once('./src/Manager/ReviewManager.php');
 require_once('./src/Manager/PatchNoteManager.php');
@@ -43,55 +43,45 @@ if (isset($uri[2])) {
 // all endpoints exclude base -> "/"
 // everything else results in a 404 Not Found
 switch ($uri[1]) {
+
+    /* USER */
     case 'user':
+        $manager = new UserManager($dbConnection, 'users');
         // pass the request method and user ID to the PersonController
-        $controller = new UserController(
-            $dbConnection, 
-            $_SERVER["REQUEST_METHOD"], 
-            $id, 
-            new UserManager($dbConnection)
-        );
+        $controller = new UserController($_SERVER["REQUEST_METHOD"], $id, $manager);
         break;
+
+    /* PATCHNOTE */
     case 'patchnote':
-        $controller = new PatchNoteController(
-            $dbConnection, 
-            $_SERVER["REQUEST_METHOD"], 
-            $id,
-            new PatchNoteManager($dbConnection)
-        );
+        $manager = new PatchNoteManager($dbConnection, 'patch_notes');
+        $controller = new PatchNoteController($_SERVER["REQUEST_METHOD"], $id, $manager);
         break;
+
+    /* FAQITEM */
     case 'faqitem':
-        $controller = new FaqItemController(
-            $dbConnection, 
-            $_SERVER["REQUEST_METHOD"], 
-            $id,
-            new FaqItemManager($dbConnection)
-        );
+        $manager = new FaqItemManager($dbConnection, 'faqitems');
+        $controller = new FaqItemController($_SERVER["REQUEST_METHOD"], $id, $manager);
         break;
+
+    /* REVIEW */
     case 'review':
-        $controller = new ReviewController(
-            $dbConnection, 
-            $_SERVER["REQUEST_METHOD"], 
-            $id,
-            new ReviewManager($dbConnection)
-        );
+        $manager = new ReviewManager($dbConnection, 'reviews');
+        $controller = new ReviewController($_SERVER["REQUEST_METHOD"], $id, $manager);
         break;
+
+    /* CREATION */
     case 'creation':
-        $controller = new CreationController(
-            $dbConnection, 
-            $_SERVER["REQUEST_METHOD"], 
-            $id,
-            new CreationManager($dbConnection)
-        );
+        $manager = new CreationManager($dbConnection, 'creations');
+        $controller = new CreationController($_SERVER["REQUEST_METHOD"], $id, $manager);
         break;
+
+    /* CHARACTER */
     case 'character':
-        $controller = new CharacterController(
-            $dbConnection, 
-            $_SERVER["REQUEST_METHOD"], 
-            $id,
-            new CharacterManager($dbConnection)
-        );
+        $manager = new CharacterManager($dbConnection, 'characters');
+        $controller = new CharacterController($_SERVER["REQUEST_METHOD"], $id, $manager);
         break;
+
+    /* DEFAULT */
     default:
         header("HTTP/1.1 404 Not Found");
         exit();

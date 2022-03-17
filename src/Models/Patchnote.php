@@ -6,13 +6,15 @@ class PatchNote {
     public int $publication_date;
     public int $updated_at;
     public string $bodytext;
+    public string $type;
 
     public function __construct(
         ?int $id = null,
         float $version,
         int $publication_date,
         int $updated_at,
-        string $bodytext
+        string $bodytext,
+        string $type
     )
     {
         $this->id = $id;
@@ -20,6 +22,7 @@ class PatchNote {
         $this->publication_date = $publication_date;
         $this->updated_at = $updated_at;
         $this->bodytext = $bodytext;
+        $this->type = $type;
     }
 
     /**
@@ -118,6 +121,26 @@ class PatchNote {
     public function setUpdated_at($updated_at)
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of type
+     */ 
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set the value of type
+     *
+     * @return  self
+     */ 
+    public function setType($type)
+    {
+        $this->type = $type;
 
         return $this;
     }

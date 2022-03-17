@@ -1,39 +1,6 @@
 <?php
 
-require_once('./src/Manager/Manager.php');
-
-class PatchNoteManager extends Manager {
-
-    /**
-     * Get every patch_note entries
-     */
-    public function findAll() {
-        $stmt = "SELECT * FROM patch_notes;";
-
-        try {
-            $stmt = $this->db->query($stmt);
-            $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-            return $result;
-        } catch (\PDOException $e) {
-            exit($e->getMessage());
-        }
-    }
-    
-    /**
-     * Get a specific patch_note entry by id
-     */
-    public function findById($id) {
-        $stmt = "SELECT * FROM patch_notes WHERE id = ?;";
-        
-        try {
-            $stmt = $this->db->prepare($stmt);
-            $stmt->execute([$id]);
-            $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-            return $result;
-        } catch (\PDOException $e) {
-            exit($e->getMessage());
-        }    
-    }
+class PatchNoteManager extends BaseManager {
 
     /**
      * Create a new patch_note entry
@@ -81,26 +48,6 @@ class PatchNoteManager extends Manager {
                 'updated_at' => $data->updated_at,
                 'bodytext'  => $data->bodytext
             ]);
-            return $stmt->rowCount();
-        } catch (\PDOException $e) {
-            exit($e->getMessage());
-        }    
-    }
-
-    /**
-     * Delete a specific patch_note entry
-     */
-    public function delete($id)
-    {
-        $stmt = "
-            DELETE FROM patch_notes
-            WHERE id = :id;
-        ";
-
-        try {
-            $stmt = $this->db->prepare($stmt);
-            $stmt->execute(['id' => $id]);
-
             return $stmt->rowCount();
         } catch (\PDOException $e) {
             exit($e->getMessage());

@@ -1,41 +1,6 @@
 <?php
 
-require_once('./src/Manager/Manager.php');
-
-class UserManager extends Manager {
-
-    /**
-     * Get every user entries
-     */
-    public function findAll() {
-        $stmt = "SELECT * FROM users;";
-
-        try {
-            $stmt = $this->db->query($stmt);
-            $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-
-            return $result;
-        } catch (\PDOException $e) {
-            exit($e->getMessage());
-        }
-    }
-    
-    /**
-     * Get a specific entry by field
-     */
-    public function findBy($id, string $type) {
-        $stmt = "SELECT * FROM users WHERE " . $type . " = ?;";
-
-        try {
-            $stmt = $this->db->prepare($stmt);
-            $stmt->execute([$id]);
-            $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-
-            return $result;
-        } catch (\PDOException $e) {
-            exit($e->getMessage());
-        }    
-    }
+class UserManager extends BaseManager {
 
     /**
      * Create a new user entry
@@ -90,26 +55,6 @@ class UserManager extends Manager {
                 'gold_earned' => $data->gold_earned ?? 0,
                 'completed_chapters' => $data->completed_chapters ?? 0,
             ]);
-            return $stmt->rowCount();
-        } catch (\PDOException $e) {
-            exit($e->getMessage());
-        }    
-    }
-
-    /**
-     * Delete a specific user entry
-     */
-    public function delete($id)
-    {
-        $stmt = "
-            DELETE FROM users
-            WHERE id = :id;
-        ";
-
-        try {
-            $stmt = $this->db->prepare($stmt);
-            $stmt->execute(['id' => $id]);
-
             return $stmt->rowCount();
         } catch (\PDOException $e) {
             exit($e->getMessage());

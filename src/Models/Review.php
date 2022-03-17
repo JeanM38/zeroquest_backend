@@ -4,19 +4,22 @@ class Review {
     public ?int $id;
     public int $user_id;
     public int $creation_id;
-    public bool $upvote;
+    public string $title;
+    public string $comment;
 
     public function __construct(
         ?int $id = null,
         int $user_id,
         int $creation_id,
-        bool $upvote
+        string $title,
+        string $comment
     )
     {
         $this->id = $id;
         $this->user_id = $user_id;
         $this->creation_id = $creation_id;
-        $this->upvote = $upvote;
+        $this->title = $title;
+        $this->comment = $comment;
     }
 
     /**
@@ -80,21 +83,41 @@ class Review {
     }
 
     /**
-     * Get the value of upvote
+     * Get the value of title
      */ 
-    public function getUpvote()
+    public function getTitle()
     {
-        return $this->upvote;
+        return $this->title;
     }
 
     /**
-     * Set the value of upvote
+     * Set the value of title
      *
      * @return  self
      */ 
-    public function setUpvote($upvote)
+    public function setTitle($title)
     {
-        $this->upvote = $upvote;
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of comment
+     */ 
+    public function getComment()
+    {
+        return $this->comment;
+    }
+
+    /**
+     * Set the value of comment
+     *
+     * @return  self
+     */ 
+    public function setComment($comment)
+    {
+        $this->comment = $comment;
 
         return $this;
     }

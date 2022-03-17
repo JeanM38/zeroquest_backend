@@ -1,7 +1,7 @@
 <?php
 
 require_once('./src/Models/User.php');
-class UserController extends Controller {
+class UserController extends BaseController {
 
     public function processRequest()
     {
@@ -9,7 +9,7 @@ class UserController extends Controller {
         switch ($this->requestMethod) {
             case 'GET':
                 /* User want a specific user or every users */
-                $response = $this->id ? $this->getUser($this->id) : $this->getAllUsers();
+                $response = $this->id ? $this->getById($this->id) : $this->getAll($this->type);
                 break;
             case 'POST':
                 /* Create a new user */
@@ -21,7 +21,7 @@ class UserController extends Controller {
                 break;
             case 'DELETE':
                 /* Delete an existing user */
-                $response = $this->deleteUser($this->id);
+                $response = $this->delete($this->id);
                 break;
             default:
                 /* Return a 404 page on unavailable HTTP method */
@@ -34,32 +34,6 @@ class UserController extends Controller {
         if ($response['body']) {
             echo $response['body'];
         }
-    }
-
-    private function getAllUsers()
-    {
-        /* Get all users */
-        $result = $this->manager->findAll();
-        $response['status_code_header'] = 'HTTP/1.1 200 OK';
-        $response['body'] = json_encode($result);
-
-        return $response;
-    }
-
-    private function getUser($id)
-    {
-        /* Get specific user */
-        $result = $this->manager->findBy($id, 'id');
-
-        /* 404 on unfound user */
-        if (count($result) === 0) {
-            $response = $this->notFoundResponse();
-        } else {
-            $response['status_code_header'] = 'HTTP/1.1 200 OK';
-            $response['body'] = json_encode($result);
-        }
-                    
-        return $response;
     }
 
     private function createUserFromRequest()
@@ -121,24 +95,6 @@ class UserController extends Controller {
 
         /* Update existing user */
         $this->manager->update($id, $user);
-        $response['status_code_header'] = 'HTTP/1.1 200 OK';
-        $response['body'] = null;
-
-        return $response;
-    }
-
-    private function deleteUser($id)
-    {
-        /* Get specific user */
-        $user = $this->manager->findBy($id, 'id');
-
-        /* 404 on unfound user */
-        if (!$user) {
-            return $this->notFoundResponse();
-        }
-
-        /* Delete specific user */
-        $this->manager->delete($id);
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = null;
 
