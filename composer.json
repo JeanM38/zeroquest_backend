@@ -15,5 +15,8 @@
             "name": "Jean MIONNET",
             "email": "jmionnet@emagineurs.com"
         }
-    ]
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "9"
+    }
 }
