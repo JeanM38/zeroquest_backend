@@ -1,6 +1,6 @@
 <?php
 
-class PatchNote {
+class News {
     public ?int $id;
     public float $version;
     public int $publication_date;

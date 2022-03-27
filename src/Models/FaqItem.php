@@ -13,7 +13,7 @@ class FaqItem {
     {
         $this->id = $id;
         $this->question = $question;
-        $this->response = $answer;
+        $this->answer = $answer;
     }
     
 

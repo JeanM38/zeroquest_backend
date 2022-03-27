@@ -392,3 +392,38 @@ try {
 } catch (\PDOException $e) {
     exit($e->getMessage());
 }
+
+$faker = Faker\Factory::create();
+
+for ($i = 0; $i < 30; ++$i) {
+    /* faq_items faker data */
+    $fakerFaqRequest = <<<EOS
+        INSERT INTO faq_items (question, answer)
+        VALUES ('$faker->paragraph', '$faker->paragraph');
+    EOS;
+
+    /* news faker data */
+    $fakerNewsRequest = <<<EOS
+        INSERT INTO news (version, top_news, bodytext, type, media_path)
+        VALUES (
+            1.$i,
+            strtoupper($faker->boolean),
+            '$faker->randomHtml',
+            '$faker->word',
+            '$faker->url'
+        );
+    EOS;    
+        /* items faker data */
+        $fakerItemsRequest = <<<EOS
+        INSERT INTO items (label, description, media_path)
+        VALUES (
+            '$faker->paragraph',
+            '$faker->paragraph',
+            '$faker->url'
+        );
+    EOS;  
+
+    $dbConnection->query($fakerFaqRequest);
+    $dbConnection->query($fakerNewsRequest);
+    $dbConnection->query($fakerItemsRequest);
+}

@@ -1,13 +1,13 @@
 <?php
 
-class PatchNoteManager extends BaseManager {
+class NewsManager extends BaseManager {
 
     /**
-     * Create a new patch_note entry
+     * Create a new news  entry
      */
     public function insert(object $data) {
         $stmt = "
-            INSERT INTO patch_notes
+            INSERT INTO news
                 (version, publication_date, updated_at, bodytext)
             VALUES
                 (:version, :publication_date, :updated_at, :bodytext);
@@ -29,12 +29,12 @@ class PatchNoteManager extends BaseManager {
     }
 
     /**
-     * Update a patch_note entry
+     * Update a news entry
      */
     public function update($id, object $data)
     {        
         $stmt = "
-            UPDATE patch_notes
+            UPDATE news
             SET 
                 updated_at = :updated_at,
                 bodytext = :bodytext,

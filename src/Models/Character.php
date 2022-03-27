@@ -6,7 +6,6 @@ class Character {
     public int $type;
     public int $owner_id;
     public int $body;
-    public string $items;
     public int $gold;
 
     public function __construct(
@@ -15,7 +14,6 @@ class Character {
         int $type,
         int $owner_id,
         int $body,
-        string $items,
         int $gold
     )
     {
@@ -24,7 +22,6 @@ class Character {
         $this->type = $type;
         $this->owner_id = $owner_id;
         $this->body = $body;
-        $this->items = $items;
         $this->gold = $gold;
     }
 
@@ -124,26 +121,6 @@ class Character {
     public function setBody($body)
     {
         $this->body = $body;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of items
-     */ 
-    public function getItems()
-    {
-        return $this->items;
-    }
-
-    /**
-     * Set the value of items
-     *
-     * @return  self
-     */ 
-    public function setItems($items)
-    {
-        $this->items = $items;
 
         return $this;
     }

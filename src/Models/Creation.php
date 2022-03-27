@@ -19,20 +19,20 @@ class Creation {
         string $title,
         bool $private,
         int $author_id,
-        int $description,
-        int $notes,
+        string $description,
+        string $notes,
         int $created_at,
         int $updated_at,
-        int $enemies,
-        int $traps,
-        int $doors,
-        int $furnitures
+        string $enemies,
+        string $traps,
+        string $doors,
+        string $furnitures
     )
     {
         $this->id = $id;
         $this->title = $title;
         $this->private = $private;
-        $this->author = $author_id;
+        $this->author_id = $author_id;
         $this->description = $description;
         $this->notes = $notes;
         $this->created_at = $created_at;

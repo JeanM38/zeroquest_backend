@@ -5,7 +5,7 @@ require_once "./bootstrap.php";
 /* Controllers */
 require_once("./src/Controller/BaseController.php"); # Base  
 require_once("./src/Controller/UserController.php"); 
-require_once("./src/Controller/PatchNoteController.php");
+require_once("./src/Controller/NewsController.php");
 require_once("./src/Controller/FaqItemController.php");
 require_once("./src/Controller/ReviewController.php");
 require_once("./src/Controller/CreationController.php");
@@ -15,7 +15,7 @@ require_once("./src/Controller/CharacterController.php");
 require_once('./src/Manager/BaseManager.php'); # Base
 require_once('./src/Manager/UserManager.php'); 
 require_once('./src/Manager/ReviewManager.php');
-require_once('./src/Manager/PatchNoteManager.php');
+require_once('./src/Manager/NewsManager.php');
 require_once('./src/Manager/FaqItemManager.php');
 require_once('./src/Manager/CreationManager.php');
 require_once('./src/Manager/CharacterManager.php');
@@ -51,10 +51,10 @@ switch ($uri[1]) {
         $controller = new UserController($_SERVER["REQUEST_METHOD"], $id, $manager);
         break;
 
-    /* PATCHNOTE */
+    /* NEWS */
     case 'patchnote':
-        $manager = new PatchNoteManager($dbConnection, 'patch_notes');
-        $controller = new PatchNoteController($_SERVER["REQUEST_METHOD"], $id, $manager);
+        $manager = new NewsManager($dbConnection, 'news');
+        $controller = new NewsController($_SERVER["REQUEST_METHOD"], $id, $manager);
         break;
 
     /* FAQITEM */

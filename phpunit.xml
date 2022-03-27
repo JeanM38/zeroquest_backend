@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<phpunit colors="true">
+    <testsuite name="ZeroQuest API - Testing">
+        <directory>./tests</directory>
+    </testsuite>
+    <filter>
+        <whitelist proceessUncoveredFromWhiteList="true">
+            <directory suffix=".php">src</directory>
+            <file>bootstrap.php</file>
+            <file>index.php</file>
+        </whitelist>
+    </filter>
+</phpunit>
