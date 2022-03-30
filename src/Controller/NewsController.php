@@ -1,6 +1,6 @@
 <?php
 
-require_once('./src/Models/Newws.php');
+require_once('./src/Models/News.php');
 
 class NewsController extends BaseController {
 

@@ -22,10 +22,10 @@ require_once('./src/Manager/CharacterManager.php');
 
 /* Access configuration */
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: OPTIONS,GET,POST,PUT,DELETE");
 header("Access-Control-Max-Age: 3600");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 /* Get uri args */
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -52,7 +52,7 @@ switch ($uri[1]) {
         break;
 
     /* NEWS */
-    case 'patchnote':
+    case 'new':
         $manager = new NewsManager($dbConnection, 'news');
         $controller = new NewsController($_SERVER["REQUEST_METHOD"], $id, $manager);
         break;

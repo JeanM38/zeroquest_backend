@@ -12,6 +12,7 @@ class Creation {
     public string $enemies;
     public string $traps;
     public string $doors;
+    public string $spawns;
     public string $furnitures;
 
     public function __construct(
@@ -26,6 +27,7 @@ class Creation {
         string $enemies,
         string $traps,
         string $doors,
+        string $spawns,
         string $furnitures
     )
     {
@@ -40,6 +42,7 @@ class Creation {
         $this->enemies = $enemies;
         $this->traps = $traps;
         $this->doors = $doors;
+        $this->spawns = $spawns;
         $this->furnitures = $furnitures;
     }
 
@@ -259,6 +262,26 @@ class Creation {
     public function setDoors($doors)
     {
         $this->doors = $doors;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of spawns
+     */ 
+    public function getSpawns()
+    {
+        return $this->spawns;
+    }
+
+    /**
+     * Set the value of spawns
+     *
+     * @return  self
+     */ 
+    public function setSpawns($spawns)
+    {
+        $this->spawns = $spawns;
 
         return $this;
     }

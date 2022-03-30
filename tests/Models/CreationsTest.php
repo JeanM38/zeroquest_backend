@@ -26,6 +26,7 @@ final class CreationTest extends TestCase
             'enemies', 
             'traps', 
             'doors', 
+            'spawns',
             'furnitures'
         );
         $this->assertNotEmpty($creation);
@@ -40,6 +41,7 @@ final class CreationTest extends TestCase
         $this->assertEquals($creation->getEnemies(), 'enemies');
         $this->assertEquals($creation->getTraps(), 'traps');
         $this->assertEquals($creation->getDoors(), 'doors');
+        $this->assertEquals($creation->getSpawns(), 'spawns');
         $this->assertEquals($creation->getFurnitures(), 'furnitures');
     }
 
@@ -61,6 +63,7 @@ final class CreationTest extends TestCase
             'enemies', 
             'traps', 
             'doors', 
+            'spawns',
             'furnitures'
         );
 
@@ -75,6 +78,7 @@ final class CreationTest extends TestCase
         $creation->setEnemies('new enemies');
         $creation->setTraps('new traps');
         $creation->setDoors('new doors');
+        $creation->setSpawns('new spawns');
         $creation->setFurnitures('new furnitures');
 
         $this->assertEquals($creation->getId(), 1);
@@ -88,6 +92,7 @@ final class CreationTest extends TestCase
         $this->assertEquals($creation->getEnemies(), 'new enemies');
         $this->assertEquals($creation->getTraps(), 'new traps');
         $this->assertEquals($creation->getDoors(), 'new doors');
+        $this->assertEquals($creation->getSpawns(), 'new spawns');
         $this->assertEquals($creation->getFurnitures(), 'new furnitures');
     }
 }
