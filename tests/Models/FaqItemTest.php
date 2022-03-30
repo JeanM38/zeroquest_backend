@@ -8,17 +8,22 @@ require_once('./src/Models/FaqItem.php');
  */
 final class FaqItemTest extends TestCase
 {
+    private object $faq_item;
+
+    protected function setUp(): void
+    {
+        $this->faq_item = new FaqItem(null, 'this is a question', 'this is an answer'); 
+    }
+
     /**
      * Getters tests
      */
     public function testIsFaqItemIsGettedCorrectly(): void
     {
-        /* Create a new instance of faqItem */
-        $faqItem = new FaqItem(null, 'this is a question', 'this is an answer');
-        $this->assertNotEmpty($faqItem);
-        $this->assertNull($faqItem->getId());
-        $this->assertEquals($faqItem->getQuestion(), 'this is a question');
-        $this->assertEquals($faqItem->getAnswer(), 'this is an answer');
+        $this->assertNotEmpty($this->faq_item);
+        $this->assertNull($this->faq_item->getId());
+        $this->assertEquals($this->faq_item->getQuestion(), 'this is a question');
+        $this->assertEquals($this->faq_item->getAnswer(), 'this is an answer');
     }
 
     /**
@@ -26,14 +31,12 @@ final class FaqItemTest extends TestCase
      */
     public function testIsFaqItemIsSettedCorrectly(): void
     {
-        $faqItem = new FaqItem(0, 'this is a question', 'this is an answer');
+        $this->faq_item->setId(1);
+        $this->faq_item->setQuestion('this is a new question');
+        $this->faq_item->setAnswer('this is a new answer');
 
-        $faqItem->setId(1);
-        $faqItem->setQuestion('this is a new question');
-        $faqItem->setAnswer('this is a new answer');
-
-        $this->assertEquals($faqItem->getId(), 1);
-        $this->assertEquals($faqItem->getQuestion(), 'this is a new question');
-        $this->assertEquals($faqItem->getAnswer(), 'this is a new answer');
+        $this->assertEquals($this->faq_item->getId(), 1);
+        $this->assertEquals($this->faq_item->getQuestion(), 'this is a new question');
+        $this->assertEquals($this->faq_item->getAnswer(), 'this is a new answer');
     }
 }

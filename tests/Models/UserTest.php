@@ -8,22 +8,26 @@ require_once('./src/Models/User.php');
  */
 final class UserTest extends TestCase
 {
+    private object $user;
+
+    protected function setUp(): void
+    {
+        $this->user = new User(null, "Vazek", "jmionnet@emagineurs.com", "pass");
+    }
+
     /**
      * Getters tests
      */
     public function testIsUserIsGettedCorrectly(): void
     {
-        /* Create a new instance of user */
-        $user = new User(null, "Vazek", "jmionnet@emagineurs.com", "pass");
-
-        $this->assertNotEmpty($user);
-        $this->assertNull($user->getId());
-        $this->assertEquals($user->getPseudo(), "Vazek");
-        $this->assertEquals($user->getEmail(), "jmionnet@emagineurs.com");
-        $this->assertEquals($user->getPassword(), "pass");
-        $this->assertEquals($user->getTime_played(), 0);
-        $this->assertEquals($user->getGold_earned(), 0);
-        $this->assertEquals($user->getCompleted_chapters(), 0);
+        $this->assertNotEmpty($this->user);
+        $this->assertNull($this->user->getId());
+        $this->assertEquals($this->user->getPseudo(), "Vazek");
+        $this->assertEquals($this->user->getEmail(), "jmionnet@emagineurs.com");
+        $this->assertEquals($this->user->getPassword(), "pass");
+        $this->assertEquals($this->user->getTime_played(), 0);
+        $this->assertEquals($this->user->getGold_earned(), 0);
+        $this->assertEquals($this->user->getCompleted_chapters(), 0);
     }
 
     /**
@@ -31,21 +35,19 @@ final class UserTest extends TestCase
      */
     public function testIsUserIsSettedCorrectly(): void
     {
-        $user = new User(null, "Vazek", "jmionnet@emagineurs.com", "pass");
+        $this->user->setId(1);
+        $this->user->setPseudo("VazekLeRetour");
+        $this->user->setEmail("jmionnet@emagineurs.fr");
+        $this->user->setPassword("passSecured");
+        $this->user->setTime_played($this->user->getTime_played() + 1);
+        $this->user->setGold_earned($this->user->getGold_earned() + 200);
+        $this->user->setCompleted_chapters($this->user->getCompleted_chapters() + 1);
 
-        $user->setId(1);
-        $user->setPseudo("VazekLeRetour");
-        $user->setEmail("jmionnet@emagineurs.fr");
-        $user->setPassword("passSecured");
-        $user->setTime_played($user->getTime_played() + 1);
-        $user->setGold_earned($user->getGold_earned() + 200);
-        $user->setCompleted_chapters($user->getCompleted_chapters() + 1);
-
-        $this->assertEquals($user->getPseudo(), "VazekLeRetour");
-        $this->assertEquals($user->getEmail(), "jmionnet@emagineurs.fr");
-        $this->assertEquals($user->getPassword(), "passSecured");
-        $this->assertEquals($user->getTime_played(), 1);
-        $this->assertEquals($user->getGold_earned(), 200);
-        $this->assertEquals($user->getCompleted_chapters(), 1);
+        $this->assertEquals($this->user->getPseudo(), "VazekLeRetour");
+        $this->assertEquals($this->user->getEmail(), "jmionnet@emagineurs.fr");
+        $this->assertEquals($this->user->getPassword(), "passSecured");
+        $this->assertEquals($this->user->getTime_played(), 1);
+        $this->assertEquals($this->user->getGold_earned(), 200);
+        $this->assertEquals($this->user->getCompleted_chapters(), 1);
     }
 }

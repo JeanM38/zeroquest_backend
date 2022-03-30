@@ -8,19 +8,23 @@ require_once('./src/Models/CharacterType.php');
  */
 final class CharacterTypeTest extends TestCase
 {
+    private object $character_type;
+
+    protected function setUp(): void
+    {
+        $this->character_type = new CharacterType(null, 'label', 'desc', 'media_path');
+    }
+
     /**
      * Getters tests
      */
     public function testIsCharacterTypeIsGettedCorrectly(): void
     {
-        /* Create a new instance of character_type */
-        $character_type = new CharacterType(null, 'label', 'desc', 'media_path');
-
-        $this->assertNotEmpty($character_type);
-        $this->assertNull($character_type->getId());
-        $this->assertEquals($character_type->getLabel(), 'label');
-        $this->assertEquals($character_type->getDescription(), 'desc');
-        $this->assertEquals($character_type->getMedia_path(), 'media_path');
+        $this->assertNotEmpty($this->character_type);
+        $this->assertNull($this->character_type->getId());
+        $this->assertEquals($this->character_type->getLabel(), 'label');
+        $this->assertEquals($this->character_type->getDescription(), 'desc');
+        $this->assertEquals($this->character_type->getMedia_path(), 'media_path');
     }
 
     /**
@@ -28,16 +32,14 @@ final class CharacterTypeTest extends TestCase
      */
     public function testIsCharacterTypeIsSettedCorrectly(): void
     {
-        $character_type = new CharacterType(null, 'label', 'desc', 'media_path');
+        $this->character_type->setId(1);
+        $this->character_type->setLabel('new label');
+        $this->character_type->setDescription('new desc');
+        $this->character_type->setMedia_path('new media_path');
 
-        $character_type->setId(1);
-        $character_type->setLabel('new label');
-        $character_type->setDescription('new desc');
-        $character_type->setMedia_path('new media_path');
-
-        $this->assertEquals($character_type->getId(), 1);
-        $this->assertEquals($character_type->getLabel(), 'new label');
-        $this->assertEquals($character_type->getDescription(), 'new desc');
-        $this->assertEquals($character_type->getMedia_path(), 'new media_path');
+        $this->assertEquals($this->character_type->getId(), 1);
+        $this->assertEquals($this->character_type->getLabel(), 'new label');
+        $this->assertEquals($this->character_type->getDescription(), 'new desc');
+        $this->assertEquals($this->character_type->getMedia_path(), 'new media_path');
     }
 }

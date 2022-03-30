@@ -8,21 +8,25 @@ require_once('./src/Models/Character.php');
  */
 final class CharacterTest extends TestCase
 {
+    private object $character;
+
+    protected function setUp(): void
+    {
+        $this->character = new Character(null, "Conan", 1, 1, 10, 100);
+    }
+
     /**
      * Getters tests
      */
     public function testIsCharacterIsGettedCorrectly(): void
     {
-        /* Create a new instance of character */
-        $character = new Character(null, "Conan", 1, 1, 10, 100);
-
-        $this->assertNotEmpty($character);
-        $this->assertNull($character->getId());
-        $this->assertEquals($character->getName(), "Conan");
-        $this->assertEquals($character->getType(), 1);
-        $this->assertEquals($character->getOwner_id(), 1);
-        $this->assertEquals($character->getBody(), 10);
-        $this->assertEquals($character->getGold(), 100);
+        $this->assertNotEmpty($this->character);
+        $this->assertNull($this->character->getId());
+        $this->assertEquals($this->character->getName(), "Conan");
+        $this->assertEquals($this->character->getType(), 1);
+        $this->assertEquals($this->character->getOwner_id(), 1);
+        $this->assertEquals($this->character->getBody(), 10);
+        $this->assertEquals($this->character->getGold(), 100);
     }
 
     /**
@@ -30,20 +34,18 @@ final class CharacterTest extends TestCase
      */
     public function testIsCharacterIsSettedCorrectly(): void
     {
-        $character = new Character(1, "Conan", 1, 1, 10, 100);
+        $this->character->setId(2);
+        $this->character->setName("ConanX");
+        $this->character->setType(2);
+        $this->character->setOwner_id(2);
+        $this->character->setBody(8);
+        $this->character->setGold(150);
 
-        $character->setId(2);
-        $character->setName("ConanX");
-        $character->setType(2);
-        $character->setOwner_id(2);
-        $character->setBody(8);
-        $character->setGold(150);
-
-        $this->assertEquals($character->getId(), 2);
-        $this->assertEquals($character->getName(), "ConanX");
-        $this->assertEquals($character->getType(), 2);
-        $this->assertEquals($character->getOwner_id(), 2);
-        $this->assertEquals($character->getBody(), 8);
-        $this->assertEquals($character->getGold(), 150);
+        $this->assertEquals($this->character->getId(), 2);
+        $this->assertEquals($this->character->getName(), "ConanX");
+        $this->assertEquals($this->character->getType(), 2);
+        $this->assertEquals($this->character->getOwner_id(), 2);
+        $this->assertEquals($this->character->getBody(), 8);
+        $this->assertEquals($this->character->getGold(), 150);
     }
 }

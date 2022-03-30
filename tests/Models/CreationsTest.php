@@ -8,13 +8,12 @@ require_once('./src/Models/Creation.php');
  */
 final class CreationTest extends TestCase
 {
-    /**
-     * Getters tests
-     */
-    public function testIsCreationIsGettedCorrectly(): void
+    private object $creation;
+
+    protected function setUp(): void
     {
         /* Create a new instance of creation */
-        $creation = new Creation(
+        $this->creation = new Creation(
             null, 
             'title', 
             true, 
@@ -29,20 +28,27 @@ final class CreationTest extends TestCase
             'spawns',
             'furnitures'
         );
-        $this->assertNotEmpty($creation);
-        $this->assertNull($creation->getId());
-        $this->assertEquals($creation->getTitle(), 'title');
-        $this->assertTrue($creation->getPrivate());
-        $this->assertEquals($creation->getAuthor_id(), 1);
-        $this->assertEquals($creation->getDescription(), 'desc');
-        $this->assertEquals($creation->getNotes(), 'notes');
-        $this->assertEquals($creation->getCreated_at(), 1648380682);
-        $this->assertEquals($creation->getUpdated_at(), 1648380682);
-        $this->assertEquals($creation->getEnemies(), 'enemies');
-        $this->assertEquals($creation->getTraps(), 'traps');
-        $this->assertEquals($creation->getDoors(), 'doors');
-        $this->assertEquals($creation->getSpawns(), 'spawns');
-        $this->assertEquals($creation->getFurnitures(), 'furnitures');
+    }
+
+    /**
+     * Getters tests
+     */
+    public function testIsCreationIsGettedCorrectly(): void
+    {
+        $this->assertNotEmpty($this->creation);
+        $this->assertNull($this->creation->getId());
+        $this->assertEquals($this->creation->getTitle(), 'title');
+        $this->assertTrue($this->creation->getPrivate());
+        $this->assertEquals($this->creation->getAuthor_id(), 1);
+        $this->assertEquals($this->creation->getDescription(), 'desc');
+        $this->assertEquals($this->creation->getNotes(), 'notes');
+        $this->assertEquals($this->creation->getCreated_at(), 1648380682);
+        $this->assertEquals($this->creation->getUpdated_at(), 1648380682);
+        $this->assertEquals($this->creation->getEnemies(), 'enemies');
+        $this->assertEquals($this->creation->getTraps(), 'traps');
+        $this->assertEquals($this->creation->getDoors(), 'doors');
+        $this->assertEquals($this->creation->getSpawns(), 'spawns');
+        $this->assertEquals($this->creation->getFurnitures(), 'furnitures');
     }
 
     /**
@@ -50,49 +56,32 @@ final class CreationTest extends TestCase
      */
     public function testIsCreationIsSettedCorrectly(): void
     {
-        /* Create a new instance of creation */
-        $creation = new Creation(
-            null, 
-            'title', 
-            true, 
-            1, 
-            'desc', 
-            'notes',
-            1648380682, 
-            1648380682, 
-            'enemies', 
-            'traps', 
-            'doors', 
-            'spawns',
-            'furnitures'
-        );
+        $this->creation->setId(1);
+        $this->creation->setTitle('new title');
+        $this->creation->setPrivate(!$this->creation->getPrivate());
+        $this->creation->setAuthor_id(2);
+        $this->creation->setDescription('new desc');
+        $this->creation->setNotes('new notes');
+        $this->creation->setCreated_at(1648380643);
+        $this->creation->setUpdated_at(1648380643);
+        $this->creation->setEnemies('new enemies');
+        $this->creation->setTraps('new traps');
+        $this->creation->setDoors('new doors');
+        $this->creation->setSpawns('new spawns');
+        $this->creation->setFurnitures('new furnitures');
 
-        $creation->setId(1);
-        $creation->setTitle('new title');
-        $creation->setPrivate(!$creation->getPrivate());
-        $creation->setAuthor_id(2);
-        $creation->setDescription('new desc');
-        $creation->setNotes('new notes');
-        $creation->setCreated_at(1648380643);
-        $creation->setUpdated_at(1648380643);
-        $creation->setEnemies('new enemies');
-        $creation->setTraps('new traps');
-        $creation->setDoors('new doors');
-        $creation->setSpawns('new spawns');
-        $creation->setFurnitures('new furnitures');
-
-        $this->assertEquals($creation->getId(), 1);
-        $this->assertEquals($creation->getTitle(), 'new title');
-        $this->assertFalse($creation->getPrivate());
-        $this->assertEquals($creation->getAuthor_id(), 2);
-        $this->assertEquals($creation->getDescription(), 'new desc');
-        $this->assertEquals($creation->getNotes(), 'new notes');
-        $this->assertEquals($creation->getCreated_at(), 1648380643);
-        $this->assertEquals($creation->getUpdated_at(), 1648380643);
-        $this->assertEquals($creation->getEnemies(), 'new enemies');
-        $this->assertEquals($creation->getTraps(), 'new traps');
-        $this->assertEquals($creation->getDoors(), 'new doors');
-        $this->assertEquals($creation->getSpawns(), 'new spawns');
-        $this->assertEquals($creation->getFurnitures(), 'new furnitures');
+        $this->assertEquals($this->creation->getId(), 1);
+        $this->assertEquals($this->creation->getTitle(), 'new title');
+        $this->assertFalse($this->creation->getPrivate());
+        $this->assertEquals($this->creation->getAuthor_id(), 2);
+        $this->assertEquals($this->creation->getDescription(), 'new desc');
+        $this->assertEquals($this->creation->getNotes(), 'new notes');
+        $this->assertEquals($this->creation->getCreated_at(), 1648380643);
+        $this->assertEquals($this->creation->getUpdated_at(), 1648380643);
+        $this->assertEquals($this->creation->getEnemies(), 'new enemies');
+        $this->assertEquals($this->creation->getTraps(), 'new traps');
+        $this->assertEquals($this->creation->getDoors(), 'new doors');
+        $this->assertEquals($this->creation->getSpawns(), 'new spawns');
+        $this->assertEquals($this->creation->getFurnitures(), 'new furnitures');
     }
 }

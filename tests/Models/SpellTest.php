@@ -8,20 +8,24 @@ require_once('./src/Models/Spell.php');
  */
 final class SpellTest extends TestCase
 {
+    private object $spell;
+
+    protected function setUp(): void
+    {
+        $this->spell = new Spell(null, 'label', 'desc', 'media_path', 1);
+    }
+
     /**
      * Getters tests
      */
     public function testIsSpellIsGettedCorrectly(): void
     {
-        /* Create a new instance of spell */
-        $spell = new Spell(null, 'label', 'desc', 'media_path', 1);
-
-        $this->assertNotEmpty($spell);
-        $this->assertNull($spell->getId());
-        $this->assertEquals($spell->getLabel(), 'label');
-        $this->assertEquals($spell->getDescription(), 'desc');
-        $this->assertEquals($spell->getMedia_path(), 'media_path');
-        $this->assertEquals($spell->getType(), 1);
+        $this->assertNotEmpty($this->spell);
+        $this->assertNull($this->spell->getId());
+        $this->assertEquals($this->spell->getLabel(), 'label');
+        $this->assertEquals($this->spell->getDescription(), 'desc');
+        $this->assertEquals($this->spell->getMedia_path(), 'media_path');
+        $this->assertEquals($this->spell->getType(), 1);
     }
 
     /**
@@ -29,19 +33,17 @@ final class SpellTest extends TestCase
      */
     public function testIsSpellIsSettedCorrectly(): void
     {
-        $spell = new Spell(null, 'label', 'desc', 'media_path', 1);
+        $this->spell->setId(1);
+        $this->spell->setLabel('new label');
+        $this->spell->setDescription('new desc');
+        $this->spell->setMedia_path('new media_path');
+        $this->spell->setType(2);
 
-        $spell->setId(1);
-        $spell->setLabel('new label');
-        $spell->setDescription('new desc');
-        $spell->setMedia_path('new media_path');
-        $spell->setType(2);
-
-        $this->assertEquals($spell->getId(), 1);
-        $this->assertEquals($spell->getLabel(), 'new label');
-        $this->assertEquals($spell->getDescription(), 'new desc');
-        $this->assertEquals($spell->getMedia_path(), 'new media_path');
-        $this->assertEquals($spell->getType(), 2);
+        $this->assertEquals($this->spell->getId(), 1);
+        $this->assertEquals($this->spell->getLabel(), 'new label');
+        $this->assertEquals($this->spell->getDescription(), 'new desc');
+        $this->assertEquals($this->spell->getMedia_path(), 'new media_path');
+        $this->assertEquals($this->spell->getType(), 2);
 
     }
 }

@@ -8,21 +8,25 @@ require_once('./src/Models/News.php');
  */
 final class NewsTest extends TestCase
 {
+    private object $news;
+
+    protected function setUp(): void
+    {
+        $this->news = new News(null, 1.2, 1648380682, 1648380682, 'bodytext', 'patch_note');
+    }
+
     /**
      * Getters tests
      */
     public function testIsNewsIsGettedCorrectly(): void
     {
-        /* Create a new instance of news */
-        $news = new News(null, 1.2, 1648380682, 1648380682, 'bodytext', 'patch_note');
-
-        $this->assertNotEmpty($news);
-        $this->assertNull($news->getId());
-        $this->assertEquals($news->getVersion(), 1.2);
-        $this->assertEquals($news->getPublication_date(), 1648380682);
-        $this->assertEquals($news->getUpdated_at(), 1648380682);
-        $this->assertEquals($news->getBodytext(), 'bodytext');
-        $this->assertEquals($news->getType(), 'patch_note');
+        $this->assertNotEmpty($this->news);
+        $this->assertNull($this->news->getId());
+        $this->assertEquals($this->news->getVersion(), 1.2);
+        $this->assertEquals($this->news->getPublication_date(), 1648380682);
+        $this->assertEquals($this->news->getUpdated_at(), 1648380682);
+        $this->assertEquals($this->news->getBodytext(), 'bodytext');
+        $this->assertEquals($this->news->getType(), 'patch_note');
     }
 
     /**
@@ -30,20 +34,18 @@ final class NewsTest extends TestCase
      */
     public function testIsNewsIsSettedCorrectly(): void
     {
-        $news = new News(null, 1.2, 1648380682, 1648380682, 'bodytext', 'patch_note');
+        $this->news->setId(1);
+        $this->news->setVersion(1.3);
+        $this->news->setPublication_date(1648316485);
+        $this->news->setUpdated_at(1648316485);
+        $this->news->setBodytext('new bodytext');
+        $this->news->setType('news');
 
-        $news->setId(1);
-        $news->setVersion(1.3);
-        $news->setPublication_date(1648316485);
-        $news->setUpdated_at(1648316485);
-        $news->setBodytext('new bodytext');
-        $news->setType('news');
-
-        $this->assertEquals($news->getId(), 1);
-        $this->assertEquals($news->getVersion(), 1.3);
-        $this->assertEquals($news->getPublication_date(), 1648316485);
-        $this->assertEquals($news->getUpdated_at(), 1648316485);
-        $this->assertEquals($news->getBodytext(), 'new bodytext');
-        $this->assertEquals($news->getType(), 'news');
+        $this->assertEquals($this->news->getId(), 1);
+        $this->assertEquals($this->news->getVersion(), 1.3);
+        $this->assertEquals($this->news->getPublication_date(), 1648316485);
+        $this->assertEquals($this->news->getUpdated_at(), 1648316485);
+        $this->assertEquals($this->news->getBodytext(), 'new bodytext');
+        $this->assertEquals($this->news->getType(), 'news');
     }
 }
