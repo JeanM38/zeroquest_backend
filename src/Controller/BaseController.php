@@ -19,8 +19,13 @@ class BaseController {
     {
         /* Get all users */
         $result = $this->manager->findAll($type);
-        $response['status_code_header'] = 'HTTP/1.1 200 OK';
-        $response['body'] = json_encode($result);
+
+        if (count($result) === 0) {
+            $response = $this->notFoundResponse();
+        } else {
+            $response['status_code_header'] = 'HTTP/1.1 200 OK';
+            $response['body'] = json_encode($result);
+        }
 
         return $response;
     }
@@ -86,6 +91,17 @@ class BaseController {
     {
         $response['status_code_header'] = 'HTTP/1.1 404 Not Found';
         $response['body'] = [];
+
+        return $response;
+    }
+
+    /**
+     * Entity already exists
+     */
+    protected function alreadyExistsResponse()
+    {
+        $response['status_code_header'] = 'HTTP/1.1 409 Conflict';
+        $response['body'] = 'An entity already exists';
 
         return $response;
     }

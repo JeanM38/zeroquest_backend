@@ -34,4 +34,23 @@ class CreationManager extends BaseManager {
             exit($e->getMessage());
         }    
     }
+
+    public function findBy(int $id) {
+        $stmt = "
+            SELECT `title`,`private`,`description`,`notes`,`created_at`,`updated_at`,`enemies`,`traps`,`doors`,`spawns`,`spawns`, `furnitures`,`pseudo` 
+            FROM `creations` 
+            INNER JOIN users ON users.id = creations.author_id
+            WHERE creations.id = " . $id . "   
+        ";
+
+        try {
+            $stmt = $this->db->prepare($stmt);
+            $stmt->execute([$id]);
+            $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+            return $result;
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }    
+    }
 }

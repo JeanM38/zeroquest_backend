@@ -15,14 +15,14 @@ class CreationController extends BaseController {
                 /* Create a new creation */
                 $response = $this->createCreationFromRequest();
                 break;
-            // case 'PUT':
-            //     /* Update an existing creation */
-            //     $response = $this->updateUserFromRequest($this->id);
-            //     break;
-            // case 'DELETE':
-            //     /* Delete an existing creation */
-            //     $response = $this->delete($this->id);
-            //     break;
+            case 'PUT':
+                /* Update an existing creation */
+                $response = $this->updateCreationFromRequest($this->id);
+                break;
+            case 'DELETE':
+                /* Delete an existing creation */
+                $response = $this->delete($this->id);
+                break;
             default:
                 /* Return a 404 page on unavailable HTTP method */
                 $response = $this->notFoundResponse();
@@ -55,18 +55,13 @@ class CreationController extends BaseController {
             $data['furnitures']
         );
 
-        // ****************************
-        // /* Check validity of data */
-        // ****************************
-
         $result = $this->manager->insert($creation);
 
         if ($result === 1) {
             $response['status_code_header'] = 'HTTP/1.1 201 Created';
             $response['body'] = null;
         } else {
-            $response['status_code_header'] = 'HTTP/1.1 409 Conflict';
-            $response['body'] = 'An entity already exists';
+            $response = $this->alreadyExistsResponse();
         }
         
         return $response;

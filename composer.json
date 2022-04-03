@@ -2,6 +2,7 @@
     "name": "jmionnet/zeroquest-backend",
     "description": "ZeroQuest API",
     "type": "project",
+    "license": "proprietary",
     "require": {
         "vlucas/phpdotenv": "^5.4"
     },
